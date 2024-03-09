@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:giphy_test/data/model/giphy_model.dart';
+import 'package:giphy_test/utils/theme/theme.dart';
 
 import 'components/custom_list.dart';
 import 'giphy_list_controller.dart';
@@ -48,6 +49,7 @@ class _GiphyListState extends ConsumerState<GiphyList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("GIPHY LIST"),
+        actions: [ThemeToggle(ref: ref)],
       ),
       body: giphyData.when(
         loading: () => const Center(

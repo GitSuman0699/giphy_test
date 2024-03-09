@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:giphy_test/presentation/screens/root_screen/components/custom_elevated_button.dart';
 import 'package:giphy_test/presentation/screens/root_screen/components/custom_text_feild.dart';
+import 'package:giphy_test/utils/theme/theme.dart';
 
 import '../giphy_list/giphy_list_screen.dart';
 
@@ -29,6 +30,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("SEARCH GIFS"),
+          actions: [ThemeToggle(ref: ref)],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
