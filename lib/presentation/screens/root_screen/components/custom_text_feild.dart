@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giphy_test/utils/theme/theme.dart';
 
 class CustomTextFeild extends StatelessWidget {
   const CustomTextFeild({
@@ -10,16 +11,45 @@ class CustomTextFeild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: textController,
-      decoration: const InputDecoration(
-        labelText: "search here",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
+    return SizedBox(
+      height: 50,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: kPrimaryColor,
+        ),
+        child: Center(
+          child: TextField(
+            textInputAction: TextInputAction.search,
+            controller: textController,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(
+                left: 16.0,
+                top: 8.0,
+                right: 16.0,
+                bottom: 8.0,
+              ),
+              border: InputBorder.none,
+              hintText: "Search here",
+              focusedBorder: InputBorder.none,
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search),
+              ),
+            ),
           ),
         ),
       ),
+      // Container(
+      //   decoration: const BoxDecoration(
+      //       shape: BoxShape.circle, color: kPrimaryColor),
+      //   child: IconButton(
+      //     onPressed: () {},
+      //     icon: const Icon(
+      //       Icons.search,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

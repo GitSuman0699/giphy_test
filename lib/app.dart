@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:giphy_test/flutter.dart';
 import 'package:giphy_test/presentation/screens/root_screen/root_screen.dart';
 import 'package:giphy_test/utils/theme/theme.dart';
 

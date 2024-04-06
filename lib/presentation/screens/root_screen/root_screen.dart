@@ -38,10 +38,10 @@ class _RootScreenState extends ConsumerState<RootScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CustomTextFeild(textController: textController),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomElevatedButton(textController: textController)
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // CustomElevatedButton(textController: textController)
             ],
           ),
         ),
