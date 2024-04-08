@@ -9,7 +9,7 @@ class GiphyListLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: GiphyNotifier.offset <= GiphyNotifier.total
+      child: GiphyNotifier.currentPage <= GiphyNotifier.totalPage
           ? const Padding(
               padding: EdgeInsets.all(8.0),
               child: Center(

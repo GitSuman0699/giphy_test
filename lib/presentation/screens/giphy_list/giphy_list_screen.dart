@@ -1,10 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:giphy_test/data/model/giphy_model.dart';
-import 'package:giphy_test/utils/theme/theme.dart';
-
 import 'components/custom_list.dart';
 import 'giphy_list_controller.dart';
 
@@ -27,7 +22,7 @@ class _GiphyListState extends ConsumerState<GiphyList> {
     super.initState();
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
-        if (GiphyNotifier.offset <= GiphyNotifier.total) {
+        if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
           ref.watch(giphyProvider(widget.searchKeyword).notifier).getGifs();
         } else {
           ScaffoldMessenger.of(context)
@@ -46,20 +41,14 @@ class _GiphyListState extends ConsumerState<GiphyList> {
   @override
   Widget build(BuildContext context) {
     final giphyData = ref.watch(giphyProvider(widget.searchKeyword));
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("GIPHY LIST"),
-        actions: [ThemeToggle(ref: ref)],
+    return giphyData.when(
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
       ),
-      body: giphyData.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (error, stackTrace) => ErrorWidget(error),
-        data: (data) => CustomList(
-          controller: controller,
-          data: data,
-        ),
+      error: (error, stackTrace) => ErrorWidget(error),
+      data: (data) => CustomList(
+        controller: controller,
+        data: data,
       ),
     );
   }

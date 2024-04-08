@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FontStyles {
   static const fontFamily = 'Montserrat';
-  static final font31 = 31.0.sp;
+  static const font31 = 31.0;
   static const font25 = 25.0;
   static const font19 = 19.0;
   static const font18 = 18.0;
@@ -14,265 +13,213 @@ class FontStyles {
   static const font11 = 11.0;
 
   static TextStyle montserratExtraBold11() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font31.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font31);
   }
 
   static TextStyle montserratExtraBold12() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font12.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font12);
   }
 
   static TextStyle montserratExtraBold13() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font13.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font13);
   }
 
   static TextStyle montserratExtraBold14() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font14.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font14);
   }
 
   static TextStyle montserratExtraBold17() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font17.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font17);
   }
 
   static TextStyle montserratExtraBold18() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font18.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font18);
   }
 
   static TextStyle montserratExtraBold19() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font19.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font19);
   }
 
   static TextStyle montserratExtraBold25() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font25.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font25);
   }
 
   static TextStyle montserratExtraBold31() {
-    return TextStyle(
-        fontWeight: FontWeight.w800,
-        fontFamily: fontFamily,
-        fontSize: font31.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: font31);
   }
 
   static TextStyle montserratRegular14() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font14.sp,
+      fontSize: font14,
     );
   }
 
   static TextStyle montserratRegular11() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font11.sp,
+      fontSize: font11,
     );
   }
 
   static TextStyle montserratRegular12() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font12.sp,
+      fontSize: font12,
     );
   }
 
   static TextStyle montserratRegular13() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font13.sp,
+      fontSize: font13,
     );
   }
 
   static TextStyle montserratRegular17() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font17.sp,
+      fontSize: font17,
     );
   }
 
   static TextStyle montserratRegular18() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font18.sp,
+      fontSize: font18,
     );
   }
 
   static TextStyle montserratRegular19() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font19.sp,
+      fontSize: font19,
     );
   }
 
   static TextStyle montserratRegular25() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font25.sp,
+      fontSize: font25,
     );
   }
 
   static TextStyle montserratRegular31() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: fontFamily,
-      fontSize: font31.sp,
+      fontSize: font31,
     );
   }
 
   static TextStyle montserratBold17() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font17.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font17);
   }
 
   static TextStyle montserratBold31() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font31.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font31);
   }
 
   static TextStyle montserratBold25() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font25.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font25);
   }
 
   static TextStyle montserratBold19() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font19.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font19);
   }
 
   static TextStyle montserratBold18() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font18.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font18);
   }
 
   static TextStyle montserratBold14() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font14.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font14);
   }
 
   static TextStyle montserratBold13() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font13.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font13);
   }
 
   static TextStyle montserratBold12() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font12.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font12);
   }
 
   static TextStyle montserratBold11() {
-    return TextStyle(
-        fontWeight: FontWeight.w700,
-        fontFamily: fontFamily,
-        fontSize: font11.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: font11);
   }
 
   static TextStyle montserratSemiBold11() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font11.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font11);
   }
 
   static TextStyle montserratSemiBold12() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font12.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font12);
   }
 
   static TextStyle montserratSemiBold13() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font13.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font13);
   }
 
   static TextStyle montserratSemiBold14() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font14.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font14);
   }
 
   static TextStyle montserratSemiBold17() {
-    return TextStyle(
+    return const TextStyle(
       fontWeight: FontWeight.w600,
       fontFamily: fontFamily,
-      fontSize: font17.sp,
+      fontSize: font17,
     );
   }
 
   static TextStyle montserratSemiBold18() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font18.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font18);
   }
 
   static TextStyle montserratSemiBold19() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font19.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font19);
   }
 
   static TextStyle montserratSemiBold25() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font25.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font25);
   }
 
   static TextStyle montserratSemiBold31() {
-    return TextStyle(
-        fontWeight: FontWeight.w600,
-        fontFamily: fontFamily,
-        fontSize: font31.sp);
+    return const TextStyle(
+        fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: font31);
   }
   // static TextStyle montserratExtraBold() {
   //   return const TextStyle(fontWeight: FontWeight.w800, fontFamily: fontFamily);

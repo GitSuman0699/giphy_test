@@ -12,7 +12,8 @@ class GiphyRepository {
       required int limit,
       required int offset}) async {
     final response = await client.get(
-        "https://api.giphy.com/v1/gifs/search?api_key=lYljO9Mkq6SIxT7nCzpNraCVL9LFWJy9&q=$serchKeyword&limit=$limit&offset=$offset");
+        // "https://api.giphy.com/v1/gifs/search?api_key=lYljO9Mkq6SIxT7nCzpNraCVL9LFWJy9&q=trending");
+        "https://api.giphy.com/v1/gifs/search?api_key=lYljO9Mkq6SIxT7nCzpNraCVL9LFWJy9&q=$serchKeyword&limit=$limit&offset=$offset&rating=g");
 
     if (response.statusCode == 200) {
       return GiphyModel.fromJson(response.data);

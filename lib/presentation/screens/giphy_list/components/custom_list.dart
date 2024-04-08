@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/components/giphy_list.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/components/giphy_list_loader.dart';
@@ -20,6 +21,7 @@ class CustomList extends StatelessWidget {
       slivers: [
         CustomGiphyList(data: data),
         const GiphyListLoader(),
+        const SliverToBoxAdapter(child: SizedBox(height: 10))
       ],
     );
   }

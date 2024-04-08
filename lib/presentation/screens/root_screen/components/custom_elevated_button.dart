@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_screen.dart';
 
 class CustomElevatedButton extends StatelessWidget {
-  const CustomElevatedButton({
-    super.key,
-    required this.textController,
-  });
+  const CustomElevatedButton(
+      {super.key, required this.getBatteryLevel, required this.textController});
 
+  final Function getBatteryLevel;
   final TextEditingController textController;
 
   @override
@@ -14,7 +13,8 @@ class CustomElevatedButton extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          await getBatteryLevel();
           if (textController.text.isNotEmpty) {
             Navigator.push(
               context,

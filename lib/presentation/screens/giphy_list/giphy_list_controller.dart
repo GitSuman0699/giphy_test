@@ -17,22 +17,28 @@ class GiphyNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     getGifs();
   }
 
-  static List<Data> giphyList = [];
+  List<Data> giphyList = [];
 
-  static int limit = 50;
-  static int offset = 0;
-  static int total = 0;
+  int limit = 50;
+  int offset = 0;
+  static int currentPage = 1;
+  static int totalPage = 0;
 
   void getGifs() async {
     try {
+      offset = (currentPage - 1) * limit;
+
       final getGiphy = await GiphyRepository.instance.getGiphyData(
-          serchKeyword: searchKeyword, limit: limit, offset: offset);
+        serchKeyword: searchKeyword,
+        limit: limit,
+        offset: offset,
+      );
 
       giphyList.addAll(getGiphy!.data!);
 
-      offset = offset + 50;
+      currentPage++;
 
-      total = getGiphy.pagination!.totalCount!;
+      totalPage = (getGiphy.pagination!.totalCount! / limit).ceil();
 
       state = AsyncValue<List<Data>>.data(giphyList);
     } catch (e) {
