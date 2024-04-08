@@ -48,47 +48,6 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       child: SafeArea(
         child: Scaffold(
           drawer: const Drawer(),
-          appBar: AppBar(
-            title: !tapOnSearch
-                ? const Text("Meeemes")
-                : TextField(
-                    controller: textController,
-                    autofocus: true,
-                    textInputAction: TextInputAction.search,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          if (textController.text.isNotEmpty) {
-                            textController.clear();
-                          } else {
-                            setState(() {
-                              tapOnSearch = !tapOnSearch;
-                            });
-                          }
-                        },
-                        icon: const Icon(Icons.close),
-                      ),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: "Search",
-                    ),
-                  ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    tapOnSearch = !tapOnSearch;
-                  });
-                },
-                icon: const Icon(
-                  Icons.search,
-                ),
-              ),
-            ],
-          ),
           body: GiphyList(
             searchKeyword:
                 textController.text.isNotEmpty ? textController.text : "random",

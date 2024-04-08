@@ -20,13 +20,17 @@ class _GiphyListState extends ConsumerState<GiphyList> {
   @override
   void initState() {
     super.initState();
+
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
         if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
           ref.watch(giphyProvider(widget.searchKeyword).notifier).getGifs();
         } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("No more data")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("No more data"),
+            ),
+          );
         }
       }
     });
