@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_screen.dart';
 import 'package:giphy_test/utils/theme/theme.dart';
 
-class CustomTextFeild extends StatelessWidget {
+class CustomTextFeild extends ConsumerWidget {
   const CustomTextFeild({
     super.key,
     required this.textController,
@@ -10,7 +12,7 @@ class CustomTextFeild extends StatelessWidget {
   final TextEditingController textController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       height: 50,
       child: Container(
@@ -33,7 +35,15 @@ class CustomTextFeild extends StatelessWidget {
               hintText: "Search here",
               focusedBorder: InputBorder.none,
               suffixIcon: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GiphyList(
+                          searchKeyword: textController.text,
+                        ),
+                      ));
+                },
                 icon: const Icon(Icons.search),
               ),
             ),
