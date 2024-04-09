@@ -20,4 +20,16 @@ class GiphyRepository {
     }
     return null;
   }
+
+  Future<GiphyModel?> getTrendingGiphyData({
+    required int limit,
+    required int offset,
+  }) async {
+    final response = await client.get(
+        "https://api.giphy.com/v1/gifs/trending?api_key=lYljO9Mkq6SIxT7nCzpNraCVL9LFWJy9&limit=$limit&offset=$offset&rating=g&bundle=messaging_non_clips");
+    if (response.statusCode == 200) {
+      return GiphyModel.fromJson(response.data);
+    }
+    return null;
+  }
 }

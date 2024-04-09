@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:giphy_test/presentation/screens/giphy_list/components/custom_app_bar.dart';
 import 'package:giphy_test/presentation/screens/root_screen/components/custom_elevated_button.dart';
 import 'package:giphy_test/presentation/screens/root_screen/components/custom_text_feild.dart';
 import 'package:giphy_test/utils/theme/theme.dart';
@@ -18,25 +19,6 @@ class RootScreen extends ConsumerStatefulWidget {
 }
 
 class _RootScreenState extends ConsumerState<RootScreen> {
-  static const platform = MethodChannel("device_battery_level");
-  String _batteryLevel = "Unknown";
-  TextEditingController textController = TextEditingController();
-  bool tapOnSearch = false;
-
-  Future<void> getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = "Your Battery Level: $result%";
-    } on PlatformException catch (e) {
-      batteryLevel = "Error ${e.message}";
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -45,13 +27,10 @@ class _RootScreenState extends ConsumerState<RootScreen> {
           FocusManager.instance.primaryFocus?.unfocus();
         }
       },
-      child: SafeArea(
+      child: const SafeArea(
         child: Scaffold(
-          drawer: const Drawer(),
-          body: GiphyList(
-            searchKeyword:
-                textController.text.isNotEmpty ? textController.text : "random",
-          ),
+          drawer: Drawer(),
+          body: CustomAppBar(),
         ),
       ),
     );

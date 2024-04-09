@@ -6,8 +6,8 @@ import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_controller.dart';
 import 'package:giphy_test/utils/common/shimmer_effect.dart';
 
-class CustomGiphyList extends ConsumerStatefulWidget {
-  const CustomGiphyList({
+class TrendingListScreen extends ConsumerStatefulWidget {
+  const TrendingListScreen({
     super.key,
     required this.data,
   });
@@ -16,10 +16,10 @@ class CustomGiphyList extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CustomGiphyListState();
+      _TrendingListScreenState();
 }
 
-class _CustomGiphyListState extends ConsumerState<CustomGiphyList> {
+class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
   String haha = "haha";
   final ScrollController controller = ScrollController();
 

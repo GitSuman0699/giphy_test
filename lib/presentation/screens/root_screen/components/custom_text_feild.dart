@@ -36,13 +36,13 @@ class CustomTextFeild extends ConsumerWidget {
               focusedBorder: InputBorder.none,
               suffixIcon: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GiphyList(
-                          searchKeyword: textController.text,
-                        ),
-                      ));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => GiphyList(
+                  //         searchKeyword: textController.text,
+                  //       ),
+                  //     ));
                 },
                 icon: const Icon(Icons.search),
               ),

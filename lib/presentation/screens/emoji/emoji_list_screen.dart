@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_controller.dart';
 import 'package:giphy_test/utils/common/shimmer_effect.dart';
+import '../../../data/model/emoji_model.dart';
 
-class CustomGiphyList extends ConsumerStatefulWidget {
-  const CustomGiphyList({
+class EmojiListScreen extends ConsumerStatefulWidget {
+  const EmojiListScreen({
     super.key,
     required this.data,
   });
@@ -16,10 +16,10 @@ class CustomGiphyList extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CustomGiphyListState();
+      _EmojiListScreenState();
 }
 
-class _CustomGiphyListState extends ConsumerState<CustomGiphyList> {
+class _EmojiListScreenState extends ConsumerState<EmojiListScreen> {
   String haha = "haha";
   final ScrollController controller = ScrollController();
 
@@ -55,7 +55,7 @@ class _CustomGiphyListState extends ConsumerState<CustomGiphyList> {
       child: MasonryGridView.count(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        crossAxisCount: 2,
+        crossAxisCount: 4,
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         itemCount: widget.data.length,
@@ -64,8 +64,8 @@ class _CustomGiphyListState extends ConsumerState<CustomGiphyList> {
             imageUrl: widget.data[index].images!.fixedHeight!.url!,
             fit: BoxFit.fill,
             imageBuilder: (context, imageProvider) => Container(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
+              height: 80,
+              width: 80,
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(4),
@@ -75,9 +75,10 @@ class _CustomGiphyListState extends ConsumerState<CustomGiphyList> {
                 ),
               ),
             ),
-            progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
+            progressIndicatorBuilder: (context, url, progress) =>
+                const ShimmerEffect(
+              height: 80,
+              width: 80,
             ),
           );
         },
