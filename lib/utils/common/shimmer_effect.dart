@@ -20,7 +20,7 @@ class ShimmerEffect extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(isCircular! ? height! : 8),
+          borderRadius: BorderRadius.circular(isCircular! ? height! : 4),
         ),
         height: height ?? height,
         width: width ?? width,

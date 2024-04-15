@@ -50,41 +50,41 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MasonryGridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        itemCount: widget.data.length,
-        itemBuilder: (context, index) {
-          return CachedNetworkImage(
-            imageUrl: widget.data[index].images!.fixedHeight!.url!,
-            fit: BoxFit.fill,
-            imageBuilder: (context, imageProvider) => Container(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(4),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.fill,
-                ),
+    return MasonryGridView.count(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      itemCount: widget.data.length,
+      itemBuilder: (context, index) {
+        return CachedNetworkImage(
+          imageUrl: widget.data[index].images!.fixedHeight!.url!,
+          fit: BoxFit.fill,
+          imageBuilder: (context, imageProvider) => Container(
+            height:
+                double.parse(widget.data[index].images!.fixedWidth!.height!),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(4),
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.fill,
               ),
             ),
-            progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-            ),
-          );
-        },
-      ),
+          ),
+          progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
+            height:
+                double.parse(widget.data[index].images!.fixedWidth!.height!),
+          ),
+        );
+      },
     );
   }
 }
+
+
+
 
 
 

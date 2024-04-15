@@ -29,7 +29,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       },
       child: const SafeArea(
         child: Scaffold(
-          drawer: Drawer(),
+          // drawer: Drawer(),
           body: CustomAppBar(),
         ),
       ),
