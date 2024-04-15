@@ -4,15 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_controller.dart';
+import 'package:giphy_test/presentation/screens/text/text_tab_controller.dart';
 import 'package:giphy_test/utils/common/shimmer_effect.dart';
 
 class TextListScreen extends ConsumerStatefulWidget {
   const TextListScreen({
     super.key,
-    required this.data,
+    // required this.data,
   });
 
-  final List<Data> data;
+  // final List<Data> data;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TextListScreenState();
@@ -28,8 +29,9 @@ class _TextListScreenState extends ConsumerState<TextListScreen> {
 
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
-        if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
-          ref.watch(giphyProvider(haha).notifier).getGifs();
+        if (TrendingTextNotifier.currentPage <=
+            TrendingTextNotifier.totalPage) {
+          ref.watch(trendingTextProvider.notifier).getTrendingText();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -49,38 +51,45 @@ class _TextListScreenState extends ConsumerState<TextListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MasonryGridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        itemCount: widget.data.length,
-        itemBuilder: (context, index) {
-          return CachedNetworkImage(
-            imageUrl: widget.data[index].images!.fixedHeight!.url!,
-            fit: BoxFit.fill,
-            imageBuilder: (context, imageProvider) => Container(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(4),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.fill,
+    final trendingData = ref.watch(trendingTextProvider);
+    return trendingData.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => ErrorWidget(error),
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: MasonryGridView.count(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return Container(
+                padding: const EdgeInsets.all(8),
+                height: double.parse(data[index].images!.fixedWidth!.height!),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/transparent_background.png"),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-            ),
-            progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-            ),
-          );
-        },
-      ),
+                child: CachedNetworkImage(
+                  imageUrl: data[index].images!.fixedHeight!.url!,
+                  fit: BoxFit.fill,
+                  progressIndicatorBuilder: (context, url, progress) =>
+                      ShimmerEffect(
+                    height:
+                        double.parse(data[index].images!.fixedWidth!.height!),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

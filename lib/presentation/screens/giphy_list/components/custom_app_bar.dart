@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/emoji/emoji_tab.dart';
-import 'package:giphy_test/presentation/screens/giphy_list/components/giphy_list.dart';
-import 'package:giphy_test/presentation/screens/giphy_list/components/giphy_list_loader.dart';
-import 'package:giphy_test/presentation/screens/giphy_list/components/tab_bar.dart';
 import 'package:giphy_test/presentation/screens/stickers/stickers_tab.dart';
 import 'package:giphy_test/presentation/screens/text/text_tab.dart';
 import 'package:giphy_test/presentation/screens/trending/trending_tab.dart';
+import 'package:giphy_test/presentation/screens/trending/trending_tab_controller.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget {
   const CustomAppBar({
@@ -30,11 +27,25 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    controller.addListener(() {
+      if (controller.position.pixels == controller.position.maxScrollExtent) {
+        if (TrendingGifNotifier.currentPage <= TrendingGifNotifier.totalPage) {
+          ref.watch(trendingGifsProvider.notifier).getTrendingGifs();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("No more data"),
+            ),
+          );
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
@@ -101,7 +112,7 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar>
           ),
         ];
       },
-      controller: controller,
+      // controller: controller,
       body: TabBarView(controller: _tabController, children: const [
         TrendingTab(),
         StickersTab(),
