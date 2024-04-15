@@ -9,7 +9,7 @@ final trendingEmojiProvider = StateNotifierProvider.autoDispose<
 
 class TrendingEmojiNotifier extends StateNotifier<AsyncValue<List<Data>>> {
   TrendingEmojiNotifier() : super(const AsyncValue.loading()) {
-    getEmoji();
+    getTrendingEmoji();
   }
 
   List<Data> emojiList = [];
@@ -19,7 +19,7 @@ class TrendingEmojiNotifier extends StateNotifier<AsyncValue<List<Data>>> {
   static int currentPage = 1;
   static int totalPage = 0;
 
-  void getEmoji() async {
+  void getTrendingEmoji() async {
     try {
       offset = (currentPage - 1) * limit;
 

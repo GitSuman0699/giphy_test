@@ -2,17 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:giphy_test/data/model/giphy_model.dart';
-import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_controller.dart';
+import 'package:giphy_test/presentation/screens/trending/trending_tab_controller.dart';
+import 'package:giphy_test/utils/common/pagination_loader.dart';
 import 'package:giphy_test/utils/common/shimmer_effect.dart';
 
 class TrendingListScreen extends ConsumerStatefulWidget {
   const TrendingListScreen({
     super.key,
-    required this.data,
+    // required this.data,
   });
 
-  final List<Data> data;
+  // final List<Data> data;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -29,8 +29,8 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
 
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
-        if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
-          ref.watch(giphyProvider(haha).notifier).getGifs();
+        if (TrendingGifNotifier.currentPage <= TrendingGifNotifier.totalPage) {
+          ref.watch(trendingGifsProvider.notifier).getTrendingGifs();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -50,32 +50,56 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MasonryGridView.count(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      crossAxisCount: 2,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      itemCount: widget.data.length,
-      itemBuilder: (context, index) {
-        return CachedNetworkImage(
-          imageUrl: widget.data[index].images!.fixedHeight!.url!,
-          fit: BoxFit.fill,
-          imageBuilder: (context, imageProvider) => Container(
-            height:
-                double.parse(widget.data[index].images!.fixedWidth!.height!),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(4),
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.fill,
+    final trendingData = ref.watch(trendingGifsProvider);
+    return trendingData.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => ErrorWidget(error),
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomScrollView(
+            controller: controller,
+            // physics: const NeverScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: MasonryGridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return CachedNetworkImage(
+                      imageUrl: data[index].images!.fixedHeight!.url!,
+                      fit: BoxFit.fill,
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: double.parse(
+                            data[index].images!.fixedWidth!.height!),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          ShimmerEffect(
+                        height: double.parse(
+                            data[index].images!.fixedWidth!.height!),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ),
-          progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
-            height:
-                double.parse(widget.data[index].images!.fixedWidth!.height!),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+              const SliverToBoxAdapter(
+                child: PaginationLoader(),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+            ],
           ),
         );
       },

@@ -19,6 +19,15 @@ class TrendingStickersNotifier extends StateNotifier<AsyncValue<List<Data>>> {
   static int currentPage = 1;
   static int totalPage = 0;
 
+  @override
+  void dispose() {
+    giphyList.clear();
+    currentPage = 1;
+    totalPage = 0;
+    offset = 0;
+    super.dispose();
+  }
+
   void getStickers() async {
     try {
       offset = (currentPage - 1) * limit;

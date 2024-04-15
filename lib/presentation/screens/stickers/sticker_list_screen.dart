@@ -1,18 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giphy_test/data/model/giphy_model.dart';
 import 'package:giphy_test/presentation/screens/giphy_list/giphy_list_controller.dart';
+import 'package:giphy_test/presentation/screens/stickers/stickers_tab_controller.dart';
+import 'package:giphy_test/utils/common/pagination_loader.dart';
 import 'package:giphy_test/utils/common/shimmer_effect.dart';
 
 class StrickerListScreen extends ConsumerStatefulWidget {
   const StrickerListScreen({
     super.key,
-    required this.data,
+    // required this.data,
   });
 
-  final List<Data> data;
+  // final List<Data> data;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -29,8 +32,9 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
 
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
-        if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
-          ref.watch(giphyProvider(haha).notifier).getGifs();
+        if (TrendingStickersNotifier.currentPage <=
+            TrendingStickersNotifier.totalPage) {
+          ref.watch(trendingStickersProvider.notifier).getStickers();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -50,38 +54,61 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MasonryGridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        itemCount: widget.data.length,
-        itemBuilder: (context, index) {
-          return CachedNetworkImage(
-            imageUrl: widget.data[index].images!.fixedHeight!.url!,
-            fit: BoxFit.fill,
-            imageBuilder: (context, imageProvider) => Container(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-              decoration: BoxDecoration(
-                // color: Colors.transparent,
-                borderRadius: BorderRadius.circular(4),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.fill,
+    final trendingStickerData = ref.watch(trendingStickersProvider);
+    return trendingStickerData.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => ErrorWidget(error),
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: MasonryGridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.all(8),
+                      height:
+                          double.parse(data[index].images!.fixedWidth!.height!),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        image: const DecorationImage(
+                          image:
+                              AssetImage("assets/transparent_background.png"),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: data[index].images!.fixedHeight!.url!,
+                        fit: BoxFit.fill,
+                        // imageBuilder: (context, imageProvider) => Container(
+
+                        // ),
+                        progressIndicatorBuilder: (context, url, progress) =>
+                            ShimmerEffect(
+                          height: double.parse(
+                              data[index].images!.fixedWidth!.height!),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
-            progressIndicatorBuilder: (context, url, progress) => ShimmerEffect(
-              height:
-                  double.parse(widget.data[index].images!.fixedWidth!.height!),
-            ),
-          );
-        },
-      ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+              const SliverToBoxAdapter(
+                child: PaginationLoader(),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+            ],
+          ),
+        );
+      },
     );
   }
 }
