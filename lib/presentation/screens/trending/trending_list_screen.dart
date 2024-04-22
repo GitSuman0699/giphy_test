@@ -31,12 +31,6 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
         if (TrendingGifNotifier.currentPage <= TrendingGifNotifier.totalPage) {
           ref.watch(trendingGifsProvider.notifier).getTrendingGifs();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("No more data"),
-            ),
-          );
         }
       }
     });
@@ -95,8 +89,12 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 10)),
-              const SliverToBoxAdapter(
-                child: PaginationLoader(),
+              SliverToBoxAdapter(
+                child: Visibility(
+                    visible: TrendingGifNotifier.currentPage <=
+                            TrendingGifNotifier.totalPage ||
+                        TrendingGifNotifier.giphyList.isNotEmpty,
+                    child: const PaginationLoader()),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 10)),
             ],

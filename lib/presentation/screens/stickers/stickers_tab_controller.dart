@@ -12,7 +12,7 @@ class TrendingStickersNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     getStickers();
   }
 
-  List<Data> giphyList = [];
+  static List<Data> stickerList = [];
 
   int limit = 50;
   int offset = 0;
@@ -21,7 +21,7 @@ class TrendingStickersNotifier extends StateNotifier<AsyncValue<List<Data>>> {
 
   @override
   void dispose() {
-    giphyList.clear();
+    stickerList.clear();
     currentPage = 1;
     totalPage = 0;
     offset = 0;
@@ -32,20 +32,20 @@ class TrendingStickersNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     try {
       offset = (currentPage - 1) * limit;
 
-      final getGiphy =
+      final getStickers =
           await StickersRepository.instance.getTrendingStickersData(
         limit: limit,
         offset: offset,
       );
 
-      giphyList.addAll(getGiphy!.data!);
+      stickerList.addAll(getStickers!.data!);
 
-      // currentPage++;
+      currentPage++;
 
-      totalPage = (getGiphy.pagination!.totalCount! / limit).ceil();
+      totalPage = (getStickers.pagination!.totalCount! / limit).ceil();
 
       if (mounted) {
-        state = AsyncValue<List<Data>>.data(giphyList);
+        state = AsyncValue<List<Data>>.data(stickerList);
       }
     } catch (e) {
       rethrow;

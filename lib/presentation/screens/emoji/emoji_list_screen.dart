@@ -29,14 +29,9 @@ class _EmojiListScreenState extends ConsumerState<EmojiListScreen> {
 
     controller.addListener(() {
       if (controller.position.pixels == controller.position.maxScrollExtent) {
-        if (GiphyNotifier.currentPage <= GiphyNotifier.totalPage) {
+        if (TrendingEmojiNotifier.count >= 50 ||
+            TrendingEmojiNotifier.count == TrendingEmojiNotifier.limit) {
           ref.watch(trendingEmojiProvider.notifier).getTrendingEmoji();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("No more data"),
-            ),
-          );
         }
       }
     });
@@ -52,55 +47,63 @@ class _EmojiListScreenState extends ConsumerState<EmojiListScreen> {
   Widget build(BuildContext context) {
     final trendingData = ref.watch(trendingEmojiProvider);
     return trendingData.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => ErrorWidget(error),
-        data: (data) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: MasonryGridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return CachedNetworkImage(
-                        imageUrl: data[index].images!.fixedHeight!.url!,
-                        fit: BoxFit.fill,
-                        imageBuilder: (context, imageProvider) => Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.fill,
-                            ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => ErrorWidget(error),
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomScrollView(
+            controller: controller,
+            slivers: [
+              SliverToBoxAdapter(
+                child: MasonryGridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return CachedNetworkImage(
+                      imageUrl: data[index].images!.fixedHeight!.url!,
+                      fit: BoxFit.fill,
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        progressIndicatorBuilder: (context, url, progress) =>
-                            const ShimmerEffect(
-                          height: 80,
-                          width: 80,
-                        ),
-                      );
-                    },
-                  ),
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          const ShimmerEffect(
+                        height: 80,
+                        width: 80,
+                      ),
+                    );
+                  },
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
-                const SliverToBoxAdapter(
-                  child: PaginationLoader(),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+              SliverToBoxAdapter(
+                child: Visibility(
+                  visible: TrendingEmojiNotifier.count >= 50 ||
+                      TrendingEmojiNotifier.count ==
+                          TrendingEmojiNotifier.limit ||
+                      TrendingEmojiNotifier.emojiList.isNotEmpty,
+                  child: const PaginationLoader(),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
-              ],
-            ),
-          );
-        });
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 

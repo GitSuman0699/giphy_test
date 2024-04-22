@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:giphy_test/data/model/giphy_model.dart';
-import 'package:giphy_test/data/repository/giphy_repository.dart';
 import 'package:giphy_test/data/repository/text_repository.dart';
 
 final trendingTextProvider = StateNotifierProvider.autoDispose<
@@ -13,12 +12,21 @@ class TrendingTextNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     getTrendingText();
   }
 
-  List<Data> textList = [];
+  static List<Data> textList = [];
 
   int limit = 50;
   int offset = 0;
   static int currentPage = 1;
   static int totalPage = 0;
+
+  @override
+  void dispose() {
+    textList.clear();
+    currentPage = 1;
+    totalPage = 0;
+    offset = 0;
+    super.dispose();
+  }
 
   void getTrendingText() async {
     try {
@@ -31,7 +39,7 @@ class TrendingTextNotifier extends StateNotifier<AsyncValue<List<Data>>> {
 
       textList.addAll(getText!.data!);
 
-      // currentPage++;
+      currentPage++;
 
       totalPage = (getText.pagination!.totalCount! / limit).ceil();
 

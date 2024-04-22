@@ -12,7 +12,7 @@ class TrendingGifNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     getTrendingGifs();
   }
 
-  final List<Data> _giphyList = [];
+  static List<Data> giphyList = [];
 
   int limit = 50;
   int offset = 0;
@@ -22,7 +22,7 @@ class TrendingGifNotifier extends StateNotifier<AsyncValue<List<Data>>> {
 
   @override
   void dispose() {
-    _giphyList.clear();
+    giphyList.clear();
     currentPage = 1;
     totalPage = 0;
     offset = 0;
@@ -38,14 +38,14 @@ class TrendingGifNotifier extends StateNotifier<AsyncValue<List<Data>>> {
         offset: offset,
       );
 
-      _giphyList.addAll(getGiphy!.data!);
+      giphyList.addAll(getGiphy!.data!);
 
       currentPage++;
 
       totalPage = (getGiphy.pagination!.totalCount! / limit).ceil();
 
       if (mounted) {
-        state = AsyncValue<List<Data>>.data(_giphyList);
+        state = AsyncValue<List<Data>>.data(giphyList);
       }
     } catch (e) {
       rethrow;

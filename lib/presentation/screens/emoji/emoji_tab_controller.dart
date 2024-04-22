@@ -12,25 +12,36 @@ class TrendingEmojiNotifier extends StateNotifier<AsyncValue<List<Data>>> {
     getTrendingEmoji();
   }
 
-  List<Data> emojiList = [];
+  static List<Data> emojiList = [];
 
-  int limit = 52;
+  static int limit = 52;
   int offset = 0;
   static int currentPage = 1;
-  static int totalPage = 0;
+  static int count = 0;
+
+  @override
+  void dispose() {
+    emojiList.clear();
+    currentPage = 1;
+    count = 0;
+    offset = 0;
+    super.dispose();
+  }
 
   void getTrendingEmoji() async {
     try {
       offset = (currentPage - 1) * limit;
 
-      final getGiphy = await EmojiRepository.instance.getTrendingEmojis(
+      final getEmoji = await EmojiRepository.instance.getTrendingEmojis(
         limit: limit,
         offset: offset,
       );
 
-      emojiList.addAll(getGiphy!.data!);
+      emojiList.addAll(getEmoji!.data!);
 
-      // currentPage++;
+      count = getEmoji.pagination!.count!;
+
+      currentPage++;
 
       // totalPage = (getGiphy.pagination!.totalCount! / limit).ceil();
 

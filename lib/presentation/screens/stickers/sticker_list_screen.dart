@@ -35,12 +35,6 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
         if (TrendingStickersNotifier.currentPage <=
             TrendingStickersNotifier.totalPage) {
           ref.watch(trendingStickersProvider.notifier).getStickers();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("No more data"),
-            ),
-          );
         }
       }
     });
@@ -62,6 +56,7 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomScrollView(
+            controller: controller,
             slivers: [
               SliverToBoxAdapter(
                 child: MasonryGridView.count(
@@ -73,7 +68,7 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      padding: const EdgeInsets.all(8),
+                      // padding: const EdgeInsets.all(8),
                       height:
                           double.parse(data[index].images!.fixedWidth!.height!),
                       decoration: BoxDecoration(
@@ -101,8 +96,13 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 10)),
-              const SliverToBoxAdapter(
-                child: PaginationLoader(),
+              SliverToBoxAdapter(
+                child: Visibility(
+                  visible: TrendingStickersNotifier.currentPage <=
+                          TrendingStickersNotifier.totalPage ||
+                      TrendingStickersNotifier.stickerList.isNotEmpty,
+                  child: const PaginationLoader(),
+                ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 10)),
             ],
