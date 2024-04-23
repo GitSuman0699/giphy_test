@@ -93,8 +93,8 @@ class _EmojiListScreenState extends ConsumerState<EmojiListScreen> {
                 child: Visibility(
                   visible: TrendingEmojiNotifier.count >= 50 ||
                       TrendingEmojiNotifier.count ==
-                          TrendingEmojiNotifier.limit ||
-                      TrendingEmojiNotifier.emojiList.isNotEmpty,
+                              TrendingEmojiNotifier.limit &&
+                          TrendingEmojiNotifier.emojiList.isNotEmpty,
                   child: const PaginationLoader(),
                 ),
               ),

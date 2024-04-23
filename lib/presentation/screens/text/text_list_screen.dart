@@ -95,7 +95,7 @@ class _TextListScreenState extends ConsumerState<TextListScreen> {
               SliverToBoxAdapter(
                 child: Visibility(
                     visible: TrendingTextNotifier.currentPage <=
-                            TrendingTextNotifier.totalPage ||
+                            TrendingTextNotifier.totalPage &&
                         TrendingTextNotifier.textList.isNotEmpty,
                     child: const PaginationLoader()),
               ),

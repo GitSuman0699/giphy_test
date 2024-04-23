@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:giphy_test/presentation/screens/emoji/emoji_tab.dart';
+import 'package:giphy_test/presentation/screens/search/search_screen.dart';
 import 'package:giphy_test/presentation/screens/stickers/stickers_tab.dart';
 import 'package:giphy_test/presentation/screens/text/text_tab.dart';
 import 'package:giphy_test/presentation/screens/trending/trending_tab.dart';
@@ -49,67 +50,70 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar>
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
-            pinned: true,
-            floating: true,
-            snap: true,
-            title: !tapOnSearch
-                ? const Text("Meeemes")
-                : TextField(
-                    controller: textController,
-                    autofocus: true,
-                    textInputAction: TextInputAction.search,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          if (textController.text.isNotEmpty) {
-                            textController.clear();
-                          } else {
-                            setState(() {
-                              tapOnSearch = !tapOnSearch;
-                            });
-                          }
-                        },
-                        icon: const Icon(Icons.close),
-                      ),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: "Search",
-                    ),
+              pinned: true,
+              floating: true,
+              snap: true,
+              title:
+                  // !tapOnSearch
+                  //     ?
+                  const Text("Meeemes"),
+              // : TextField(
+              //     controller: textController,
+              //     autofocus: true,
+              //     textInputAction: TextInputAction.search,
+              //     decoration: InputDecoration(
+              //       suffixIcon: IconButton(
+              //         onPressed: () {
+              //           if (textController.text.isNotEmpty) {
+              //             textController.clear();
+              //           } else {
+              //             setState(() {
+              //               tapOnSearch = !tapOnSearch;
+              //             });
+              //           }
+              //         },
+              //         icon: const Icon(Icons.close),
+              //       ),
+              //       border: InputBorder.none,
+              //       focusedBorder: InputBorder.none,
+              //       enabledBorder: InputBorder.none,
+              //       errorBorder: InputBorder.none,
+              //       disabledBorder: InputBorder.none,
+              //       hintText: "Search",
+              //     ),
+              //   ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.search,
                   ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    tapOnSearch = !tapOnSearch;
-                  });
-                },
-                icon: const Icon(
-                  Icons.search,
-                ),
-              ),
-            ],
-            bottom: TabBar(
-              indicatorPadding: const EdgeInsets.fromLTRB(-16, 8, -16, 8),
-              controller: _tabController,
-              tabs: const [
-                Tab(
-                  text: "Trending",
-                ),
-                Tab(
-                  text: "Stickers",
-                ),
-                Tab(
-                  text: "Emoji",
-                ),
-                Tab(
-                  text: "Text",
                 ),
               ],
-            ),
-          ),
+              bottom: TabBar(
+                indicatorPadding: const EdgeInsets.fromLTRB(-16, 8, -16, 8),
+                controller: _tabController,
+                tabs: const [
+                  Tab(
+                    text: "Trending",
+                  ),
+                  Tab(
+                    text: "Stickers",
+                  ),
+                  Tab(
+                    text: "Emoji",
+                  ),
+                  Tab(
+                    text: "Text",
+                  ),
+                ],
+              )),
         ];
       },
       // controller: controller,
@@ -121,13 +125,6 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar>
       ]),
       // slivers: [
 
-      //   // SliverPersistentHeader(
-      //   //   delegate: TabBarWidget(
-      //   //     tabController: _tabController,
-      //   //   ),
-      //   //   pinned: true,
-      //   //   floating: true,
-      //   // ),
       //   CustomGiphyList(data: widget.data),
       //   const GiphyListLoader(),
       //   const SliverToBoxAdapter(child: SizedBox(height: 10))

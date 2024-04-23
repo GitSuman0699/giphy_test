@@ -92,7 +92,7 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
               SliverToBoxAdapter(
                 child: Visibility(
                     visible: TrendingGifNotifier.currentPage <=
-                            TrendingGifNotifier.totalPage ||
+                            TrendingGifNotifier.totalPage &&
                         TrendingGifNotifier.giphyList.isNotEmpty,
                     child: const PaginationLoader()),
               ),

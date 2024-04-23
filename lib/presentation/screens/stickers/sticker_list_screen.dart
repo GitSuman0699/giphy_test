@@ -82,9 +82,6 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
                       child: CachedNetworkImage(
                         imageUrl: data[index].images!.fixedHeight!.url!,
                         fit: BoxFit.fill,
-                        // imageBuilder: (context, imageProvider) => Container(
-
-                        // ),
                         progressIndicatorBuilder: (context, url, progress) =>
                             ShimmerEffect(
                           height: double.parse(
@@ -99,7 +96,7 @@ class _StrickerListScreenState extends ConsumerState<StrickerListScreen> {
               SliverToBoxAdapter(
                 child: Visibility(
                   visible: TrendingStickersNotifier.currentPage <=
-                          TrendingStickersNotifier.totalPage ||
+                          TrendingStickersNotifier.totalPage &&
                       TrendingStickersNotifier.stickerList.isNotEmpty,
                   child: const PaginationLoader(),
                 ),
