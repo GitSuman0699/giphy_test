@@ -49,56 +49,53 @@ class _TrendingListScreenState extends ConsumerState<TrendingListScreen> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) => ErrorWidget(error),
       data: (data) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomScrollView(
-            controller: controller,
-            // physics: const NeverScrollableScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
-                child: MasonryGridView.count(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return CachedNetworkImage(
-                      imageUrl: data[index].images!.fixedHeight!.url!,
-                      fit: BoxFit.fill,
-                      imageBuilder: (context, imageProvider) => Container(
-                        height: double.parse(
-                            data[index].images!.fixedWidth!.height!),
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(4),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fill,
-                          ),
+        return CustomScrollView(
+          controller: controller,
+          // physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: MasonryGridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return CachedNetworkImage(
+                    imageUrl: data[index].images!.fixedHeight!.url!,
+                    fit: BoxFit.fill,
+                    imageBuilder: (context, imageProvider) => Container(
+                      height:
+                          double.parse(data[index].images!.fixedWidth!.height!),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(4),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                      progressIndicatorBuilder: (context, url, progress) =>
-                          ShimmerEffect(
-                        height: double.parse(
-                            data[index].images!.fixedWidth!.height!),
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        ShimmerEffect(
+                      height:
+                          double.parse(data[index].images!.fixedWidth!.height!),
+                    ),
+                  );
+                },
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 10)),
-              SliverToBoxAdapter(
-                child: Visibility(
-                    visible: TrendingGifNotifier.currentPage <=
-                            TrendingGifNotifier.totalPage &&
-                        TrendingGifNotifier.giphyList.isNotEmpty,
-                    child: const PaginationLoader()),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 10)),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
+            SliverToBoxAdapter(
+              child: Visibility(
+                  visible: TrendingGifNotifier.currentPage <=
+                          TrendingGifNotifier.totalPage &&
+                      TrendingGifNotifier.giphyList.isNotEmpty,
+                  child: const PaginationLoader()),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          ],
         );
       },
     );

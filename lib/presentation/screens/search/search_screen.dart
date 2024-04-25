@@ -1,14 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:giphy_test/presentation/screens/emoji/emoji_tab.dart';
 import 'package:giphy_test/presentation/screens/stickers/stickers_tab.dart';
 import 'package:giphy_test/presentation/screens/text/text_tab.dart';
+import 'package:giphy_test/presentation/screens/trending/trending_list_screen.dart';
 import 'package:giphy_test/presentation/screens/trending/trending_tab.dart';
 import 'package:giphy_test/presentation/screens/trending/trending_tab_controller.dart';
+import 'package:giphy_test/utils/colors.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
+  final List<String> trendingSearchTerms;
   const SearchScreen({
     super.key,
+    required this.trendingSearchTerms,
   });
 
   @override
@@ -44,7 +50,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
+    return Scaffold(
+      body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
@@ -111,7 +118,60 @@ class _SearchScreenState extends ConsumerState<SearchScreen>
           ];
         },
         // controller: controller,
-        body: const SizedBox.shrink()
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 8,
+            ),
+            Expanded(
+              flex: 1,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.trendingSearchTerms.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.grey[700]),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.trending_up,
+                                color: COLOR_PRIMARY_DARK,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                widget.trendingSearchTerms[index],
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(left: 8.0),
+            //   child: Text(
+            //     "Popular Now",
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            // ),
+            const Expanded(flex: 14, child: TrendingListScreen()),
+          ],
+        ),
         // TabBarView(controller: _tabController, children: const [
         //   TrendingTab(),
         //   StickersTab(),
@@ -124,6 +184,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen>
         //   const GiphyListLoader(),
         //   const SliverToBoxAdapter(child: SizedBox(height: 10))
         // ],
-        );
+      ),
+    );
   }
 }

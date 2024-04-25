@@ -8,8 +8,10 @@ import 'package:giphy_test/presentation/screens/trending/trending_tab.dart';
 import 'package:giphy_test/presentation/screens/trending/trending_tab_controller.dart';
 
 class CustomAppBar extends ConsumerStatefulWidget {
+  final List<String> trendingSearchTerms;
   const CustomAppBar({
     super.key,
+    required this.trendingSearchTerms,
   });
 
   @override
@@ -88,7 +90,9 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar>
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SearchScreen(),
+                          builder: (context) => SearchScreen(
+                            trendingSearchTerms: widget.trendingSearchTerms,
+                          ),
                         ));
                   },
                   icon: const Icon(
